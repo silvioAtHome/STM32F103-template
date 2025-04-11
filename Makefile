@@ -12,7 +12,7 @@ PROJ_NAME=main
 
 SRCS = src/main.c \
        system_stm32f10x.c\
-       startup_stm32f10x_ld.s\
+       startup_stm32f10x_md.s\
        src/init.c
 
 SRCS +=	Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c\
@@ -32,7 +32,7 @@ CFLAGS += -mfpu=vfp
 CFLAGS += -mfloat-abi=soft
 
 #für das 103 Board
-CFLAGS += -D USE_STDPERIPH_DRIVER=1 -D STM32F10X_LD -D HSE_VALUE=8000000
+CFLAGS += -D USE_STDPERIPH_DRIVER=1 -D STM32F10X_MD -D HSE_VALUE=8000000
 
 CFLAGS += -Isrc -I. -I Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x -I Libraries/CMSIS/CM3/CoreSupport
 CFLAGS += -I Libraries/STM32F10x_StdPeriph_Driver/inc/
@@ -46,9 +46,9 @@ LDFLAGS += -lc -lrdimon -lm
 
 OPENOCD= openocd
 
-OOCD_INIT += -f interface/stlink.cfg
+OOCD_INIT += -f interface/stlink-v2.cfg
 OOCD_INIT += -f target/stm32f1x.cfg
-OOCD_INIT += -c "adapter speed 500"
+OOCD_INIT += -c "adapter_khz 500"
 OOCD_INIT += -c "transport select hla_swd"
 OOCD_INIT += -c init
 OOCD_INIT += -c "reset"
